@@ -2,8 +2,10 @@
 const Discord = require("discord.js");
 // Create an instance of a Discord client
 const client = new Discord.Client();
+//grabs the login token from a file
+const fs = require("fs");
 //login token
-client.login("NTc5OTI5NzE1NDk0NzQ4MTgw.Xb89xQ.KjeSk837XUCRZVnBA_yHryMYYBI");
+client.login(fs.readFileSync("discord_bot_token.txt").toString());
 
 //END INITIAL DISCORD STUFF
 
@@ -52,12 +54,10 @@ client.on("message", message => {
                 });
             }
         }
-
         //fun stuff
         if (currentNormalizedMessage === "<ping".toUpperCase()) {
             message.channel.send("Pong");
         }
-
         //prints out all commands
         if (currentNormalizedMessage === "<help".toUpperCase()) {
             message.channel.send(generalFunctions.buildCommandListString());
