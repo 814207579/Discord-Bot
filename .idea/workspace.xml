@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="554a154a-4d1d-432d-b15c-2f4d3e81ed02" name="Default Changelist" comment="Fixed print out on getMat">
-      <change afterPath="$PROJECT_DIR$/commands.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/exceljs_functions.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/general_functions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
+    <list default="true" id="554a154a-4d1d-432d-b15c-2f4d3e81ed02" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/general_functions.js" beforeDir="false" afterPath="$PROJECT_DIR$/general_functions.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -77,7 +73,7 @@
       <option name="presentableId" value="Default" />
       <updated>1572814105612</updated>
       <workItem from="1572814107722" duration="22629000" />
-      <workItem from="1572886716826" duration="4098000" />
+      <workItem from="1572886716826" duration="4245000" />
     </task>
     <task id="LOCAL-00001" summary="Fixed print out on getMat">
       <created>1572892164935</created>
@@ -86,7 +82,14 @@
       <option name="project" value="LOCAL" />
       <updated>1572892164935</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Moved everything to modules.">
+      <created>1572895092846</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1572895092846</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -107,6 +110,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Fixed print out on getMat" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed print out on getMat" />
+    <MESSAGE value="Moved everything to modules." />
+    <option name="LAST_COMMIT_MESSAGE" value="Moved everything to modules." />
   </component>
 </project>

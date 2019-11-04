@@ -1,4 +1,4 @@
-var commandList = [];
+const commandList = [];
 //commandList[0] is fgo commands
 commandList[0] = (["fgo"]);
 commandList[0].push("<fgo getMat \"Material Name\"");
