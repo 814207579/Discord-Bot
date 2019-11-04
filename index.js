@@ -23,7 +23,6 @@ const CurrentSheetName = "Best 5 APDrop (JP)";
 getCurrentSheetFromExcelFile = function(fileName, sheetName, cb) {
     workbook.xlsx.readFile(fileName)
         .then(function() {
-            let sheetArray = workbook.worksheets;
             //console.log(sheetArray);
             let currentSheet = workbook.getWorksheet(sheetName);
             //call back?
@@ -51,7 +50,6 @@ findStringInExcelSheet = function(string, excelSheet, cb) {
         }
     }
     //you get no error, you screw up you get nothing.
-    return;
 };
 
 buildStringForGetMaterial = function(currentSheet, itemLocation, cb) {
@@ -72,7 +70,7 @@ buildStringForGetMaterial = function(currentSheet, itemLocation, cb) {
             //Grabs the AP cost
             " Node Cost: " + currentSheet.getCell((startingRow + i), (startingColumn + 5)).text +
             //grabs the drop chance
-            " Drop Chance: " + currentSheet.getCell((startingRow + i), (startingColumn + 9)).text + "%."
+            " Drop Chance: " + Number((currentSheet.getCell((startingRow + i), (startingColumn + 9)).text).toString()).toFixed(1) + "%."
         );
     }
 
@@ -83,69 +81,8 @@ buildStringForGetMaterial = function(currentSheet, itemLocation, cb) {
     cb(returnString);
 };
 
-/*
-//Something that is no longer used
-buildStringForMaterialListOne = function(excelSheet, cb) {
-    let returnString = "";
-    //helping for spacing
-    let secondaryCounter = 0;
-    //counter to reset every 35
-    let anotherCounter = 35;
-    for (let i = 5; i < 220; i += 5) {
-        //making it so it works without uppercase
-        if ((i - secondaryCounter) % 15 === 0) {
-            returnString += excelSheet.getCell(i, 3).text;
-            returnString.trimEnd();
-            returnString += "\n";
-        }
-        else {
-            returnString += excelSheet.getCell(i, 3).text.padEnd(40);
-        }
-        //dealing with weird spacing on the sheet
-        if (i === anotherCounter) {
-            i += 2;
-            //needs to be incremented by 37 to keep up with i
-            anotherCounter += 37;
-            //this one also needs to go up by 2
-            secondaryCounter += 2;
-        }
-    }
-
-    cb(returnString);
-};
-//had to split up the function
-buildStringForMaterialListTwo = function(excelSheet, cb) {
-    let returnString = "";
-    //helping for spacing
-    let secondaryCounter = 0;
-    //counter to reset every 35
-    let anotherCounter = 35;
-    for (let i = 5; i < 220; i += 5) {
-        //making it so it works without uppercase
-        if ((i - secondaryCounter) % 15 === 0) {
-            returnString += excelSheet.getCell(i, 19).text;
-            returnString.trimEnd();
-            returnString += "\n";
-        }
-        else {
-            returnString += excelSheet.getCell(i, 19).text.padEnd(40);
-        }
-        //dealing with weird spacing on the sheet
-        if (i === anotherCounter) {
-            i += 2;
-            //needs to be incremented by 37 to keep up with i
-            anotherCounter += 37;
-            //this one also needs to go up by 2
-            secondaryCounter += 2;
-        }
-    }
-
-    cb(returnString);
-};
-*/
-
 //makes a string return for everything in the commandList
-buildCommandListString = function(list) {
+buildCommandListString = function() {
     let buildString = "";
     for(let i = 0; i < commandList.length; i++) {
         buildString += commandList[i][0] + "\n";
@@ -168,7 +105,7 @@ commandList[1] = (["general"]);
     commandList[1].push("<GetProfilePicture");
     commandList[1].push("<ping");
 
-console.log(commandList);
+//console.log(commandList);
 /**
  * The ready event is vital, it means that only _after_ this will your bot start reacting to information
  * received from Discord
