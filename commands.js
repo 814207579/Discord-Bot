@@ -1,8 +1,11 @@
 let excelJSFunctions = require("../discord_bot/exceljs_functions");
+//location of excel workbook, and the sheet name in use.
+const CurrentFileName = "../working_files/Grand Order Drop Rates.xlsx";
+const CurrentSheetName = "Best 5 APDrop (JP)";
 
 module.exports = {
 
-    getMaterial: function(currentMessage, CurrentFileName, CurrentSheetName, cb) {
+    getMaterial: function(currentMessage, cb) {
         //makes an empty string for building the input for the function
         let currentSearchString = "";
         //this can't start at 0 because it needs to skip the <fgo

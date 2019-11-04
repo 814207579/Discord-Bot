@@ -2,21 +2,24 @@
 const Discord = require("discord.js");
 // Create an instance of a Discord client
 const client = new Discord.Client();
-//grabs the login token from a file
-const fs = require("fs");
-//login token
-client.login(fs.readFileSync("discord_bot_token.txt").toString());
 
-//END INITIAL DISCORD STUFF
+try {
+    //grabs the login token from a file
+    const fs = require("fs");
+    const botTokenLocation = "../working_files/discord_bot_token.txt";
+    const botToken = fs.readFileSync(botTokenLocation).toString();
+    //login token
+    client.login(botToken);
+} catch (e) {
+    console.log(e);
+}
+//needed discord login stuff above
 
 //moved all the command calls to this
 const commandModule = require("../discord_bot/commands");
-
 //moved all other general functions to here
 const generalFunctions = require("../discord_bot/general_functions.js");
 
-const CurrentFileName = "../working_files/Grand Order Drop Rates.xlsx";
-const CurrentSheetName = "Best 5 APDrop (JP)";
 
 
 //console.log(commandList);
@@ -49,7 +52,7 @@ client.on("message", message => {
                 return;
             }
             if (currentMessage[1] === "getMat".toUpperCase()) {
-                commandModule.getMaterial(currentMessage, CurrentFileName, CurrentSheetName, function(returnVal) {
+                commandModule.getMaterial(currentMessage, function(returnVal) {
                     message.channel.send(returnVal);
                 });
             }
