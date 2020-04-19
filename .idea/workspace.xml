@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="554a154a-4d1d-432d-b15c-2f4d3e81ed02" name="Default Changelist" comment="">
+    <list default="true" id="554a154a-4d1d-432d-b15c-2f4d3e81ed02" name="Default Changelist" comment="Moved bot token and moved some vars.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/commands.js" beforeDir="false" afterPath="$PROJECT_DIR$/commands.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exceljs_functions.js" beforeDir="false" afterPath="$PROJECT_DIR$/exceljs_functions.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/general_functions.js" beforeDir="false" afterPath="$PROJECT_DIR$/general_functions.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -76,7 +75,17 @@
       <option name="presentableId" value="Default" />
       <updated>1572814105612</updated>
       <workItem from="1572814107722" duration="22629000" />
-      <workItem from="1572886716826" duration="5521000" />
+      <workItem from="1572886716826" duration="6201000" />
+      <workItem from="1572897311526" duration="2000" />
+      <workItem from="1572914637482" duration="16000" />
+      <workItem from="1572914743247" duration="87000" />
+      <workItem from="1573588297893" duration="627000" />
+      <workItem from="1573795171892" duration="791000" />
+      <workItem from="1573843276297" duration="7081000" />
+      <workItem from="1575402131693" duration="734000" />
+      <workItem from="1575915166893" duration="380000" />
+      <workItem from="1576012999431" duration="62000" />
+      <workItem from="1587291145455" duration="287000" />
     </task>
     <task id="LOCAL-00001" summary="Fixed print out on getMat">
       <created>1572892164935</created>
@@ -106,7 +115,14 @@
       <option name="project" value="LOCAL" />
       <updated>1572895589719</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Moved bot token and moved some vars.">
+      <created>1572896519280</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1572896519280</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -129,6 +145,7 @@
     <MESSAGE value="Fixed print out on getMat" />
     <MESSAGE value="Moved everything to modules." />
     <MESSAGE value="Moved bot token." />
-    <option name="LAST_COMMIT_MESSAGE" value="Moved bot token." />
+    <MESSAGE value="Moved bot token and moved some vars." />
+    <option name="LAST_COMMIT_MESSAGE" value="Moved bot token and moved some vars." />
   </component>
 </project>

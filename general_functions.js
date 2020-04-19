@@ -7,6 +7,7 @@ commandList[0].push("<fgo MaterialList");
 commandList[1] = (["general"]);
 commandList[1].push("<GetProfilePicture");
 commandList[1].push("<ping");
+commandList[1].push("<getStatus");
 
 module.exports = {
 
@@ -23,5 +24,28 @@ module.exports = {
 
         return buildString;
     },
+
+    startPull: function (client, message, pullString, runTime) {
+        message.edit(pullString);
+        message.react('👍').then(() => message.react('👎'));
+
+        const filter = (reaction, user) => {
+            return ['👍', '👎'].includes(reaction.emoji.name) && user.id === message.author.id;
+        };
+
+        message.awaitReactions(filter, { max: 2, time: 60000, errors: ['time'] })
+            .then(collected => {
+                const reaction = collected.first();
+
+                if (reaction.emoji.name === '👍') {
+                    message.reply('you reacted with a thumbs up.');
+                } else {
+                    message.reply('you reacted with a thumbs down.');
+                }
+            })
+            .catch(collected => {
+                message.reply('you reacted with neither a thumbs up, nor a thumbs down.');
+            });
+    }
 
 };
