@@ -2,8 +2,8 @@ const fs = require('fs');
 const {EventEmitter} = require('events');
 const Stream = require('stream');
 const unzip = require('unzipper');
-const Sax = require('sax');
 const tmp = require('tmp');
+const SAXStream = require('../../utils/sax-stream');
 
 const FlowControl = require('../../utils/flow-control');
 
@@ -65,6 +65,7 @@ class WorkbookReader extends EventEmitter {
   read(input, options) {
     const stream = (this.stream = this._getStream(input));
     const zip = (this.zip = unzip.Parse());
+    const pendingWorksheetsTmpFiles = [];
 
     zip.on('entry', entry => {
       let match;
@@ -91,16 +92,26 @@ class WorkbookReader extends EventEmitter {
               this._parseWorksheet(entry, sheetNo, options);
             } else {
               // create temp file for each worksheet
-              tmp.file((err, path, fd, cleanupCallback) => {
-                if (err) throw err;
+              pendingWorksheetsTmpFiles.push(
+                new Promise((resolve, reject) => {
+                  tmp.file((err, path, fd, cleanupCallback) => {
+                    if (err) {
+                      return reject(err);
+                    }
 
-                const tempStream = fs.createWriteStream(path);
+                    const tempStream = fs.createWriteStream(path);
 
-                this.waitingWorkSheets.push({sheetNo, options, path});
-                entry.pipe(tempStream);
+                    this.waitingWorkSheets.push({sheetNo, options, path});
+                    entry.pipe(tempStream);
 
-                this.tempFileCleanupCallbacks.push(cleanupCallback);
-              });
+                    this.tempFileCleanupCallbacks.push(cleanupCallback);
+
+                    return tempStream.on('finish', () => {
+                      return resolve();
+                    });
+                  });
+                })
+              );
             }
           } else if (entry.path.match(/xl\/worksheets\/_rels\/sheet\d+[.]xml.rels/)) {
             match = entry.path.match(/xl\/worksheets\/_rels\/sheet(\d+)[.]xml.rels/);
@@ -113,7 +124,14 @@ class WorkbookReader extends EventEmitter {
       }
     });
 
-    zip.on('close', () => {
+    zip.on('close', async () => {
+      try {
+        await Promise.all(pendingWorksheetsTmpFiles);
+      } catch (err) {
+        this.emit('error', err);
+        return;
+      }
+
       if (this.waitingWorkSheets.length) {
         let currentBook = 0;
 
@@ -122,11 +140,7 @@ class WorkbookReader extends EventEmitter {
           const entry = fs.createReadStream(worksheetInfo.path);
 
           const {sheetNo} = worksheetInfo;
-          const worksheet = this._parseWorksheet(
-            entry,
-            sheetNo,
-            worksheetInfo.options
-          );
+          const worksheet = this._parseWorksheet(entry, sheetNo, worksheetInfo.options);
 
           worksheet.on('finished', () => {
             ++currentBook;
@@ -192,18 +206,18 @@ class WorkbookReader extends EventEmitter {
         return;
     }
 
-    const parser = Sax.createStream(true, {});
+    const saxStream = new SAXStream();
     let inT = false;
     let t = null;
     let index = 0;
-    parser.on('opentag', node => {
+    saxStream.sax.on('opentag', node => {
       if (node.name === 't') {
         t = null;
         inT = true;
       }
     });
-    parser.on('closetag', name => {
-      if (inT && name === 't') {
+    saxStream.sax.on('closetag', node => {
+      if (inT && node.name === 't') {
         if (sharedStrings) {
           sharedStrings.push(t);
         } else {
@@ -212,13 +226,13 @@ class WorkbookReader extends EventEmitter {
         t = null;
       }
     });
-    parser.on('text', text => {
+    saxStream.sax.on('text', text => {
       t = t ? t + text : text;
     });
-    parser.on('error', error => {
+    saxStream.sax.on('error', error => {
       this.emit('error', error);
     });
-    entry.pipe(parser);
+    entry.pipe(saxStream);
   }
 
   _parseStyles(entry, options) {
@@ -276,6 +290,5 @@ WorkbookReader.Options = {
   hyperlinks: ['cache', 'emit'],
   worksheets: ['emit'],
 };
-
 
 module.exports = WorkbookReader;
